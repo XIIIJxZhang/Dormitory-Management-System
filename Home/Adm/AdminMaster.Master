@@ -1,0 +1,269 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="AdminMaster.Master.cs" Inherits="Dormitory_Management_System.Home.Adm.adminMaster" %>
+
+    <!DOCTYPE html>
+    <html>
+    <head runat="server">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <title></title>
+
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" />
+
+        <style>
+            * {
+                font-family: STXihei;
+            }
+            body, html {
+                height: 100%;
+                margin: 0;
+                overflow: hidden; /* Prevent body scrolling */
+            }
+            #wrapper {
+                display: flex;
+                height: 100vh; /* Set full viewport height */
+                overflow: hidden; /* Prevent scrolling within wrapper */
+            }
+            /* Top Bar Styles */
+            .navbar-wrapper {
+                width: 100%;
+                background-color: #000000; /* Black color for top bar */
+                padding: 25px 0; /* Increased padding for better alignment */
+                color: white;
+                box-sizing: border-box;
+            }
+
+            .logouticon {
+                position: absolute;
+                top: 50%;          /* Adjust this value as needed */
+                right: 75px;       /* Adjust this value to control horizontal positioning */
+                transform: translateY(-50%); /* Vertically center the icon */
+            }
+
+            .logouticon img {
+                height: 35px;      /* Set the height of the icon */
+                width: 35px;       /* Set the width of the icon */
+                border-radius: 50%; /* Make the icon circular */
+                cursor: pointer;   /* Show pointer on hover */
+            }
+
+            .navbar {
+                width: 100%;
+                padding: 0 2%;
+                box-sizing: border-box;
+            }
+            .navbar .container-fluid.cl {
+                display: flex;
+                align-items: center;
+                justify-content: space-between; /* Align items to the middle and distribute space evenly */
+                width: 100%;
+            }
+            .navbar .logo {
+                color: white;
+                text-decoration: none;
+                font-size: 1.5rem;
+            }
+            .navbar .nav {
+                display: flex;
+                align-items: center;
+                gap: 20px; /* Decreased gap to avoid large spacing */
+            }
+            .navbar .nav .dropDown_A {
+                color: white;
+                padding: 10px 15px; /* Adjusted padding for admin */
+                text-decoration: none;
+                position: relative;
+            }
+            .navbar .nav .dropDown_A::after {
+                content: "";
+                border: solid white;
+                border-width: 0 3px 3px 0; /* Thinner arrow */
+                display: inline-block;
+                padding: 3px; /* Smaller arrow size */
+                transform: rotate(45deg);
+                -webkit-transform: rotate(45deg);
+                position: absolute;
+                right: -5px; /* Move arrow slightly to the right of the "admin" text */
+                top: 50%;
+                transform: translateY(-50%) rotate(45deg);
+                pointer-events: none; /* Prevent any scroll or hover effect */
+            }
+            .navbar .nav .dropDown-menu {
+                display: none;
+                position: absolute;
+                background-color: #ffffff; /* Light background for dropdown list */
+                border-radius: 5px;
+                list-style: none;
+                padding: 0;
+                margin-top: 10px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                white-space: nowrap; /* Ensure dropdown items are in one line */
+                min-width: 150px; /* Minimum width for dropdown */
+                overflow: hidden; /* Prevent scroll settings from appearing */
+            }
+            .navbar .nav .dropDown-menu li a {
+                padding: 10px 20px;
+                color: #000000; /* Dark text color for contrast */
+                display: block;
+                text-decoration: none;
+                transition: background-color 0.3s;
+            }
+            .navbar .nav .dropDown-menu li a:hover {
+                background-color: #f1f1f1; /* Light gray on hover */
+            }
+            .navbar .nav .dropDown_hover:hover .dropDown-menu {
+                display: block;
+            }
+            .navbar-userbar ul {
+                display: flex;
+                gap: 20px; /* Reduced gap for better positioning */
+                align-items: center;
+                position: relative;
+                left: 10%;
+                transform: translateX(-50%); /* Center align horizontally */
+            }
+            #left-sidebar {
+                background-color: teal; /* Teal background for the sidebar */
+                color: white; /* White text color */
+                width: 18%; /* Increased sidebar width */
+                height: 100vh; /* Fill entire viewport height */
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 0; /* Remove any padding around the sidebar */
+                box-sizing: border-box;
+            }
+            #menu-title {
+                font-size: 5rem; /* Larger font size for the "Menu" title */
+                text-align: center;
+                margin-top: 30px; /* Lower "Menu" title */
+                margin-bottom: 30px; /* Gap after "Menu" title */
+            }
+            #left-sidebar .nav {
+                list-style: none; /* Remove bullet points */
+                padding: 0;
+                width: 100%; /* Full width of sidebar */
+            }
+            #left-sidebar .nav-item {
+                width: 100%; /* Full width of sidebar */
+                margin-bottom: 30px; /* Spacing between selections */
+            }
+            #left-sidebar .nav-item a {
+                display: flex;
+                align-items: center;
+                padding: 20px; /* Padding for each selection */
+                text-decoration: none;
+                color: white; /* White text color */
+                background-color: #008080; /* Slightly darker teal for contrast */
+                border-radius: 8px; /* Rounded corners for each item */
+                text-align: left; /* Align text to the left */
+                box-sizing: border-box;
+                transition: background-color 0.3s, box-shadow 0.3s;
+                width: 100%; /* Full width of sidebar */
+                justify-content: space-between; /* Space between text and arrow */
+                box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1); /* Light shadow to make the item distinguished */
+            }
+            #left-sidebar .nav-item a:hover {
+                background-color: #007777; /* Darker teal on hover */
+                box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15); /* Increased shadow on hover */
+            }
+            #left-sidebar .nav-item a .arrow {
+                border: solid white;
+                border-width: 0 4px 4px 0;
+                display: inline-block;
+                padding: 8px; /* Padding for the arrow */
+                transform: rotate(-45deg);
+                -webkit-transform: rotate(-45deg);
+                margin-left: auto; /* Move arrow to the left of the item */
+                margin-right: 20px; /* Add some spacing to the right */
+            }
+            .main-content {
+                flex-grow: 1;
+                padding: 2%;
+                background-color: #f8f9fa; /* Light background color for contrast */
+                overflow-y: auto; /* Allow vertical scrolling if needed */
+                height: calc(100vh - 100px); /* Ensure main content fills available height */
+            }
+            #home-icon {
+                cursor: pointer;
+                margin-right: 10px;
+                width: 40px;
+                height: 40px;
+            }
+        </style>
+
+        <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+    </head>
+
+    <body>
+        <!-- Top Bar -->
+            <header class="navbar-wrapper">
+                <div class="navbar navbar-fixed-top">
+                    <div class="container-fluid cl">
+                        <a aria-hidden="false" class="nav-toggle Hui-iconfont visible-xs">&#xe667;</a>
+                        <nav id="Hui-userbar" class="nav navbar-nav navbar-userbar hidden-xs">
+                            <ul class="cl" style="margin-right: 50px; margin: 0 auto; align-items: center; width: 100%; justify-content: flex-end;">
+                                <li>
+                                    Welcome! Administrator
+                                </li>
+                            </ul>
+                        </nav>
+                        <div class="logouticon">
+                            <a href="/Home/Logout.aspx">
+                                <img src="../../Assets/pic/Off.png" alt="Logout">
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+
+        <div id="wrapper">
+            <!-- Left Sidebar -->
+            <div id="left-sidebar">
+                <h1 id="menu-title" style="font-size:3rem" onclick="location.href='AdminWelcome.aspx';">Home</h1>
+
+                <!-- Sidebar Items -->
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a href="StudentInfo.aspx" title="Stu">
+                            Student Info
+                            <span class="arrow"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="TutorInfo.aspx" title="Tut">
+                            Tutor Info
+                            <span class="arrow"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="WardenInfo.aspx" title="War">
+                            Warden Info
+                            <span class="arrow"></span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="DormsInfo.aspx" title="Dorm">
+                            Dorms Info
+                            <span class="arrow"></span>
+                        </a>
+                    </li>
+                    <!-- Recovered "读讯管理" -->
+                    <li class="nav-item">
+                        <a href="Registration.aspx" title="Registration">
+                            Registration
+                            <span class="arrow"></span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Main Content Area -->
+            <div class="main-content">
+                <form id="adminform" runat="server">
+                    <asp:ContentPlaceHolder ID="AdminMainContent" runat="server"></asp:ContentPlaceHolder>
+                </form>
+            </div>
+        </div>
+    </body>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
+</html>
